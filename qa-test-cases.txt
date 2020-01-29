@@ -1,0 +1,56 @@
+# QA Test Cases
+
+------------
+These should render: (substitute file.png with an appropriate file):
+------------
+
+# PNG files:
+![alt text](file.png)
+
+# <img> format properties
+![alt text](file.png){width="200" height="200"}
+
+# Optional title
+![alt text](file.png "title")
+
+# Missing alt text
+![](file.png)
+
+# file:// URIs
+![alt text](file:///path/to/file.png)
+
+# Absolute paths
+![alt text](/path/to/file.png)
+
+# Relative paths
+![alt text](../file.png)
+
+# JPG files
+![alt text](file.jpg)
+
+# GIF files
+![alt text](file.gif)
+
+# Remote URLs
+![alt text](https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png)
+
+# Word wrap
+![alt text](file.png){width="200" height="200"}, but with sublime's Word Wrap enabled,
+and as long of a line as necessary as needed to wrap. The image should appear
+below the entire wrapped line, not interleaved with it.
+
+------------
+These should not render, but not cause any problems:
+------------
+
+# File that does not exist
+![alt text](missing-file.png)
+
+# URL that does not exist
+![alt text](https://www.google.com/doesnotexist2222.png)
+
+# Unsupported image format (local)
+![alt text](file.svg)
+
+# Unsupported image format (remote)
+![alt text](https://api.travis-ci.org/xsleonard/go-merkle.svg)
