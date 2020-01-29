@@ -1,0 +1,33 @@
+[
+    {
+        "caption": "MarkdownImages: Show All Images",
+        "command": "markdown_images_show",
+        "args": {
+            "show_local": true,
+            "show_remote": true,
+        }
+    },
+
+    {
+        "caption": "MarkdownImages: Show Local Images",
+        "command": "markdown_images_show",
+        "args": {
+            "show_local": true,
+            "show_remote": false,
+        }
+    },
+
+    {
+        "caption": "MarkdownImages: Show Remote Images",
+        "command": "markdown_images_show",
+        "args": {
+            "show_local": false,
+            "show_remote": true,
+        }
+    },
+
+    {
+        "caption": "MarkdownImages: Hide Images",
+        "command": "markdown_images_hide"
+    },
+]
