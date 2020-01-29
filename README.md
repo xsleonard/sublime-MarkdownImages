@@ -2,6 +2,8 @@
 
 This is a Sublime Text 3 plugin to render images inside of markdown files.
 
+![Example](https://user-images.githubusercontent.com/1879136/73363560-ef6b0880-42e3-11ea-8b25-de885166a3b0.png)
+
 ## Usage
 
 Images in markdown use the `![alt text](uri)` markup. Wherever this appears, this plugin can render the image specified by the URI below the line.
@@ -51,4 +53,3 @@ Remote image loading runs in the main thread so it will stall ST3. Remote image 
 ## Credits 
 
 The image rendering code was seeded by [sublime_zk](https://github.com/renerocksai/sublime_zk)
-
