@@ -110,6 +110,12 @@ class ImageHandler:
             urldata = None
             rel_p = view.substr(region)
 
+            # If an image link is enclosed in <> to tolerate spaces in it,
+            # then the > appears at the end of rel_p for some reason.
+            # This character makes the link invalid, so it must be removed
+            if rel_p[-1] == '>':
+                rel_p = rel_p[0:-1]
+            
             url = urllib.parse.urlparse(rel_p)
             if url.scheme and url.scheme != 'file':
                 if not show_remote:
