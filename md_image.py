@@ -179,6 +179,7 @@ class ImageHandler:
                     debug("Failed to load {}:".format(path), e)
                     continue
                 img = urllib.parse.urlunparse(url)
+                img = img.replace('file:///', 'file://', 1)
 
             if not ttype:
                 debug("unknown ttype")
