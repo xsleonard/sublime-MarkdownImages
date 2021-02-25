@@ -116,6 +116,12 @@ class ImageHandler:
             if rel_p[-1] == '>':
                 rel_p = rel_p[0:-1]
             
+            # (Windows) cutting the drive letter from the path,
+            # otherwise urlparse interprets it as a scheme (like 'file' or 'http')
+            # and generates a bogus url object like:
+            # url= ParseResult(scheme='c', netloc='', path='/path/image.png', params='', query='', fragment='')
+            drive_letter, rel_p = os.path.splitdrive(rel_p)
+
             url = urllib.parse.urlparse(rel_p)
             if url.scheme and url.scheme != 'file':
                 if not show_remote:
@@ -173,6 +179,8 @@ class ImageHandler:
                     folder = get_path_for(view)
                     path = os.path.join(folder, path)
                 path = os.path.normpath(path)
+                # (Windows) Adding back the drive letter that was cut from the path before
+                path = drive_letter + path
 
                 url = url._replace(scheme='file', path=path)
 
