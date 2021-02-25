@@ -12,7 +12,6 @@ import re
 
 
 DEBUG = False
-DEBUG = True
 
 def debug(*args, **kwargs):
     if DEBUG:
@@ -106,7 +105,6 @@ class ImageHandler:
 
         phantoms = {}
         img_regs = view.find_by_selector(ImageHandler.selector)
-        print('regions=', img_regs)
         for region in reversed(img_regs):
             ttype = None
             urldata = None
@@ -118,13 +116,13 @@ class ImageHandler:
             if rel_p[-1] == '>':
                 rel_p = rel_p[0:-1]
             
-            print('rel_p1=', rel_p)
-            # drive_letter, rel_p = os.path.splitdrive(rel_p)
-            # print('drive_letter1=', drive_letter)
-            # print('rel_p2=', rel_p)
+            # (Windows) cutting the drive letter from the path,
+            # otherwise urlparse interprets it as a scheme (like 'file' or 'http')
+            # and generates a bogus url object like:
+            # url= ParseResult(scheme='c', netloc='', path='/path/image.png', params='', query='', fragment='')
+            drive_letter, rel_p = os.path.splitdrive(rel_p)
 
             url = urllib.parse.urlparse(rel_p)
-            print('url=', url)
             
             if url.scheme and url.scheme != 'file':
                 if not show_remote:
@@ -182,9 +180,8 @@ class ImageHandler:
                     folder = get_path_for(view)
                     path = os.path.join(folder, path)
                 path = os.path.normpath(path)
-                print('path1=', path)
-                # path = drive_letter + path
-                print('path2=', path)
+                # (Windows) Adding back the drive letter that was cut from the path before
+                path = drive_letter + path
 
                 url = url._replace(scheme='file', path=path)
 
@@ -204,7 +201,6 @@ class ImageHandler:
                 # path contains a drive letter
                 if os.path.splitdrive(path)[0]:
                     img = img.replace('file:///', 'file://', 1)
-                print('img=', img)
 
             if not ttype:
                 debug("unknown ttype")
