@@ -105,6 +105,26 @@ class ImageHandler:
 
         phantoms = {}
         img_regs = view.find_by_selector(ImageHandler.selector)
+        # Handling space characters in image links
+        # Image links not enclosed in <> that contain spaces
+        # are parsed by sublime as multiple links instead of one.
+        # Example: "![](my file.png)" gets parsed as two links: "my" and "file.png".
+        # We detect when two links are separated only by spaces and merge them
+        indexes_to_merge = []
+        for i, (left_reg, right_reg) in enumerate(zip(img_regs, img_regs[1:])):
+            inter_region = sublime.Region(left_reg.end(), right_reg.begin())
+            if (view.substr(inter_region)).isspace():
+                # the inter_region is all spaces
+                # Noting that left and right regions must be merged
+                indexes_to_merge += [i+1]
+        new_img_regs = []
+        for i in range(len(img_regs)):
+            if i in indexes_to_merge:
+                new_img_regs[-1] = new_img_regs[-1].cover(img_regs[i])
+            else:
+                new_img_regs += [img_regs[i]]
+        img_regs = new_img_regs
+
         for region in reversed(img_regs):
             ttype = None
             urldata = None
