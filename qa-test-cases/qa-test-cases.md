@@ -47,6 +47,15 @@ These should render: (provide absolute paths to the test cases that need them):
 # Remote URLs
 ![alt text](https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png)
 
+# Space in name, not enclosed in <>
+![alt text](check mark.png)
+
+# double space
+![alt text](check  mark.png)
+
+# two distinct spaces
+![alt text](check ma rk.png)
+
 # Word wrap
 ![alt text](checkmark.png){width="200" height="200"}, but with sublime's Word Wrap enabled,
 and as long of a line as necessary as needed to wrap. The image should appear
@@ -55,9 +64,6 @@ below the entire wrapped line, not interleaved with it.
 ------------
 These should not render, but not cause any problems:
 ------------
-
-# Space in name, not enclosed in <>
-![alt text](check mark.png)
 
 # File that does not exist
 ![alt text](missing-file.png)
