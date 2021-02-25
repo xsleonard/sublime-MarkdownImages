@@ -186,6 +186,13 @@ class ImageHandler:
                     continue
                 img = urllib.parse.urlunparse(url)
 
+                # On Windows, urlunparse adds a third slash after 'file://' for some reason
+                # This breaks the image url, so it must be removed
+                # splitdrive() detects windows because it only returns something if the
+                # path contains a drive letter
+                if os.path.splitdrive(path)[0]:
+                    img = img.replace('file:///', 'file://', 1)
+
             if not ttype:
                 debug("unknown ttype")
                 continue
