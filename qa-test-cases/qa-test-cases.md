@@ -31,6 +31,10 @@ These should render: (provide absolute paths to the test cases that need them):
 **Need absolute path**
 ![alt text](/path/to/checkmark.png)
 
+# Absolute paths (Windows)
+**Need absolute path**
+![alt text](C:/path/to/checkmark.png)
+
 # Relative paths
 ![alt text](../checkmark.png)
 
@@ -66,7 +70,3 @@ These should not render, but not cause any problems:
 
 # Unsupported image format (remote)
 ![alt text](https://api.travis-ci.org/xsleonard/go-merkle.svg)
-
-# Absolute paths (Windows)
-**Need absolute path**
-<!-- ![alt text](C:/path/to/checkmark.png) -->
