@@ -19,11 +19,15 @@ These should render: (provide absolute paths to the test cases that need them):
 # Missing alt text
 ![](checkmark.png)
 
-# file:// URIs
+# file:// URIs (Linux/MacOS)
 **Need absolute path**
 ![alt text](file:///path/to/checkmark.png)
 
-# Absolute paths
+# file:// URIs (Windows)
+**Need absolute path**
+![alt text](file://C:/path/to/checkmark.png)
+
+# Absolute paths (Linux/MacOS)
 **Need absolute path**
 ![alt text](/path/to/checkmark.png)
 
@@ -62,3 +66,7 @@ These should not render, but not cause any problems:
 
 # Unsupported image format (remote)
 ![alt text](https://api.travis-ci.org/xsleonard/go-merkle.svg)
+
+# Absolute paths (Windows)
+**Need absolute path**
+<!-- ![alt text](C:/path/to/checkmark.png) -->
