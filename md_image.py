@@ -123,7 +123,6 @@ class ImageHandler:
             drive_letter, rel_p = os.path.splitdrive(rel_p)
 
             url = urllib.parse.urlparse(rel_p)
-            
             if url.scheme and url.scheme != 'file':
                 if not show_remote:
                     continue
