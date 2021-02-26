@@ -14,12 +14,6 @@ If the URI points to a file on disk, it is called a "local" image, and renders b
 
 You can choose to show local, show remote or show all images from the [command palette](#commands) and with the [configuration](#configuration) settings.
 
-## Limitations
-
-Sublime's markdown parser only recognizes an image URL if these conditions are met:
-- There is no whitespace in the URL or filepath.
-- The "alt text" section of the image markup is not empty (it can have whitespace).
-
 ## Configuration
 
 By default, images are rendered when the file is first loaded. This can be configured with the `show_local_images_on_load` and `show_remote_images_on_load` settings.
@@ -47,8 +41,6 @@ These can be activated with the command palette (`cmd+shift+p`):
 This plugin adds no keybindings. You can set your own keybindings to the [commands](#commands).
 
 ## Notes
-
-The URI portion of the `![alt text](uri)` markup must not contain spaces or else the markdown syntax parser (provided by other packages) will not recognize this as image markup.
 
 Only PNG, JPG and GIF images are supported. 
 
