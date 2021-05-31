@@ -17,4 +17,10 @@
 
     // set to true if you want remote images to display on_post_save
     "show_remote_images_on_post_save": false,
+
+    // A base path to images.
+    // Let's say you store your images in `/attachments` folder.
+    // And inside that folder you have `foo.png`. Set this to `/attachments`
+    // to be able to use ![](foo.png) without specifying the full path.
+    "base_path": "",
 }

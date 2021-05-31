@@ -66,11 +66,13 @@ class MarkdownImagesPlugin(sublime_plugin.EventListener):
 
     def _update_images(self, settings, view, **kwargs):
         max_width = settings.get('img_maxwidth', None)
+        base_path = settings.get('base_path', None)
         ImageHandler.hide_images(view)
         ImageHandler.show_images(view,
                                  max_width=max_width,
                                  show_local=kwargs.get('show_local', False),
-                                 show_remote=kwargs.get('show_remote', False))
+                                 show_remote=kwargs.get('show_remote', False),
+                                 base_path=base_path)
 
 
 class ImageHandler:
@@ -90,7 +92,7 @@ class ImageHandler:
         ImageHandler.urldata.pop(view.id(), None)
 
     @staticmethod
-    def show_images(view, max_width=None, show_local=True, show_remote=False):
+    def show_images(view, max_width=None, show_local=True, show_remote=False, base_path=""):
         debug("show_images")
         if not show_local and not show_remote:
             debug("doing nothing")
@@ -195,6 +197,12 @@ class ImageHandler:
                 # determined (e.g. if the view content is not in a project and
                 # hasn't been saved), then it will anchor to /.
                 path = url.path
+
+                # Force paths to be prefixed with base_path if it was provided
+                # in settings.
+                if base_path:
+                    path = os.path.join(base_path, path)
+
                 if not os.path.isabs(path):
                     folder = get_path_for(view)
                     path = os.path.join(folder, path)
@@ -376,10 +384,12 @@ class MarkdownImagesShowCommand(sublime_plugin.TextCommand):
         max_width = settings.get('img_maxwidth', None)
         show_local = kwargs.get('show_local', True)
         show_remote = kwargs.get('show_remote', False)
+        base_path = settings.get('base_path', None)
         ImageHandler.show_images(self.view,
                                  show_local=show_local,
                                  show_remote=show_remote,
-                                 max_width=max_width)
+                                 max_width=max_width,
+                                 base_path=base_path)
 
 
 class MarkdownImagesHideCommand(sublime_plugin.TextCommand):
