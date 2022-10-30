@@ -14,6 +14,18 @@ If the URI points to a file on disk, it is called a "local" image, and renders b
 
 You can choose to show local, show remote or show all images from the [command palette](#commands) and with the [configuration](#configuration) settings.
 
+## Installation
+
+You can install this package using [Package Control](https://packagecontrol.io/installation) using the name “Markdown Images”.
+
+For development, you will want to clone the repository into “Markdown Images” directory in the Sublime Text’s `Packages` directory (`Preferences` → `Browse Packages…`):
+
+```
+git clone git@github.com:xsleonard/sublime-MarkdownImages.git 'Markdown Images'
+```
+
+(Or create a symlink with such name from your projects directory.)
+
 ## Configuration
 
 By default, images are rendered when the file is first loaded. This can be configured with the `show_local_images_on_load` and `show_remote_images_on_load` settings.
