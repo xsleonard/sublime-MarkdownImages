@@ -350,6 +350,21 @@ def get_image_size(f):
         except Exception as e:
             debug("determining jpeg image size failed", e)
             return None, None, ttype
+    elif head.startswith(b"RIFF") and head[8:12] == b"WEBP":
+        ttype = "webp"
+        head += f.read(7)
+        if head[12:16] == b"VP8 ":
+            width, height = struct.unpack("<HH", head[26:30])
+        elif head[12:16] == b"VP8X":
+            width = struct.unpack("<I", head[24:27] + b"\0")[0]
+            height = struct.unpack("<I", head[27:30] + b"\0")[0]
+        elif head[12:16] == b"VP8L":
+            b = head[21:25]
+            width = (((b[1] & 63) << 8) | b[0]) + 1
+            height = (((b[3] & 15) << 10) | (b[2] << 2) | ((b[1] & 192) >> 6)) + 1
+        else:
+            debug('unable to detect WebP key frame')
+            return None, None, None
     elif head[:4] == b'<svg':
         debug('detected svg')
         # SVG is not rendered by ST3 in phantoms.
