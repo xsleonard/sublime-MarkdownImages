@@ -10,6 +10,9 @@ These should render: (provide absolute paths to the test cases that need them):
 # Space in name, enclosed in <>:
 ![alt text](<check mark.png>)
 
+# Space in name, encoded as "%20":
+![alt text](check%20mark.png)
+
 # <img> format properties
 ![alt text](checkmark.png){width="200" height="200"}
 

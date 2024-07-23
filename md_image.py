@@ -198,6 +198,9 @@ class ImageHandler:
                 # hasn't been saved), then it will anchor to /.
                 path = url.path
 
+                # Un-escape URL-encoded sequences (like "%20" for space).
+                path = urllib.parse.unquote(path)
+
                 # Force paths to be prefixed with base_path if it was provided
                 # in settings.
                 if base_path:
