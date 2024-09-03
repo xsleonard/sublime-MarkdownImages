@@ -67,12 +67,14 @@ class MarkdownImagesPlugin(sublime_plugin.EventListener):
     def _update_images(self, settings, view, **kwargs):
         max_width = settings.get('img_maxwidth', None)
         base_path = settings.get('base_path', None)
+        arg_trim = settings.get('remove_local_url_arguments', None)
         ImageHandler.hide_images(view)
         ImageHandler.show_images(view,
                                  max_width=max_width,
                                  show_local=kwargs.get('show_local', False),
                                  show_remote=kwargs.get('show_remote', False),
-                                 base_path=base_path)
+                                 base_path=base_path,
+                                 arg_trim=arg_trim)
 
 
 class ImageHandler:
@@ -92,7 +94,7 @@ class ImageHandler:
         ImageHandler.urldata.pop(view.id(), None)
 
     @staticmethod
-    def show_images(view, max_width=None, show_local=True, show_remote=False, base_path=""):
+    def show_images(view, max_width=None, show_local=True, show_remote=False, base_path="", arg_trim=False):
         debug("show_images")
         if not show_local and not show_remote:
             debug("doing nothing")
@@ -224,6 +226,11 @@ class ImageHandler:
                     debug("Failed to load {}:".format(path), e)
                     continue
                 img = urllib.parse.urlunparse(url)
+
+                # Removes arguments in the URL
+                if arg_trim:
+                    img = img.split('?')[0]
+                    debug("split")
 
                 # On Windows, urlunparse adds a third slash after 'file://' for some reason
                 # This breaks the image url, so it must be removed
@@ -403,11 +410,13 @@ class MarkdownImagesShowCommand(sublime_plugin.TextCommand):
         show_local = kwargs.get('show_local', True)
         show_remote = kwargs.get('show_remote', False)
         base_path = settings.get('base_path', None)
+        arg_trim = settings.get('remove_local_url_arguments', None)
         ImageHandler.show_images(self.view,
                                  show_local=show_local,
                                  show_remote=show_remote,
                                  max_width=max_width,
-                                 base_path=base_path)
+                                 base_path=base_path,
+                                 arg_trim=arg_trim)
 
 
 class MarkdownImagesHideCommand(sublime_plugin.TextCommand):

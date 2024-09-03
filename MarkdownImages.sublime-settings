@@ -18,6 +18,9 @@
     // set to true if you want remote images to display on_post_save
     "show_remote_images_on_post_save": false,
 
+    // set to true if you want remove arguments from filenames like image.png?resize=800
+    "remove_local_url_arguments": false,
+
     // A base path to images.
     // Let's say you store your images in `/attachments` folder.
     // And inside that folder you have `foo.png`. Set this to `/attachments`
