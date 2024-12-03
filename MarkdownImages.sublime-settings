@@ -26,4 +26,8 @@
     // And inside that folder you have `foo.png`. Set this to `/attachments`
     // to be able to use ![](foo.png) without specifying the full path.
     "base_path": "",
+
+    // Base zoom to be applied to the images.
+    // Multiplicative with image's attribute `zoom`.
+    "base_zoom": 1.0,
 }

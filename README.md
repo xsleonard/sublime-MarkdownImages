@@ -9,6 +9,7 @@ This is a Sublime Text 3 plugin to render images inside of markdown files.
 Images in markdown use the `![alt text](uri)` markup. Wherever this appears, this plugin can render the image specified by the URI below the line.
 
 You can configure an image's dimensions by adding HTML `<img>` properties after the image markup: `![alt text](uri){width="200", height="200"}`. Everything between the `{}` will be copied to the `<img>` element that renders the image.
+Alternatively you can specify `zoom` tag: `{zoom="1.5"}` and the multiplicative zoom factor will be applied on top of the `base_zoom` config variable.
 
 If the URI points to a file on disk, it is called a "local" image, and renders by default. If the URI points to an external (http, https, etc) resource, it is called a "remote" image, and does not render by default.
 
