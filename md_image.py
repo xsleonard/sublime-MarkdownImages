@@ -8,6 +8,8 @@ import urllib.request
 import urllib.parse
 import io
 import os.path
+import subprocess
+import sys
 import re
 
 
@@ -186,7 +188,9 @@ class ImageHandler:
                     continue
 
                 FMT = u'''
-                    <img src="data:image/{}" class="centerImage" {}>
+                    <a href="{}">
+                        <img src="data:image/{}" class="centerImage" {}>
+                    </a>
                 '''
                 b64_data = base64.encodestring(data).decode('ascii')
                 b64_data = b64_data.replace('\n', '')
@@ -222,7 +226,9 @@ class ImageHandler:
                 url = url._replace(scheme='file', path=path)
 
                 FMT = '''
-                    <img src="{}" class="centerImage" {}>
+                    <a href="{}">
+                        <img src="{}" class="centerImage" {}>
+                    </a>
                 '''
                 try:
                     w, h, ttype = get_file_image_size(path)
@@ -286,7 +292,7 @@ class ImageHandler:
             debug("line_region", line_region)
 
             key = 'mdimage-' + str(line_region.b)
-            html_img = FMT.format(img, imgattr)
+            html_img = FMT.format(url.geturl(), img, imgattr)
 
             phantom = (key, html_img)
             phantoms[phantom[0]] = phantom
@@ -298,7 +304,8 @@ class ImageHandler:
             view.add_phantom(phantom[0],
                              sublime.Region(line_region.b),
                              phantom[1],
-                             sublime.LAYOUT_BLOCK)
+                             sublime.LAYOUT_BLOCK,
+                             ImageHandler.on_navigate)
             ImageHandler.phantoms[view.id()].add(phantom)
             if urldata is not None:
                 ImageHandler.urldata[view.id()][rel_p] = urldata
@@ -311,6 +318,24 @@ class ImageHandler:
 
         if not ImageHandler.phantoms[view.id()]:
             ImageHandler.phantoms.pop(view.id(), None)
+
+    @staticmethod
+    def on_navigate(url):
+        print("MarkdownImages: Opening URL/path [%s]" % url)
+
+        if sys.platform == "darwin": # MacOS
+            subprocess.call(["open", url])
+
+        elif sys.platform in ["linux", "linux2"]:
+            subprocess.call(["xdg-open", url])
+
+        elif sys.platform == "win32": # Windows
+            if url.startswith("file:///"):
+                # Python provides a shorthand method for local files on Windows.
+                os.startfile(url)
+
+            else:
+                subprocess.call(["start", url], shell=True)
 
     @staticmethod
     def hide_images(view):
