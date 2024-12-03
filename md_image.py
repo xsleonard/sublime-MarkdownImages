@@ -338,7 +338,7 @@ def check_imgattr(view, line_region, link_region=None):
     return zoom, width, height, imgattr
 
 def cut_attr(imgattr, attr):
-    m = re.search(attr+r'=\"(\d+.?\d*)\"', imgattr)
+    m = re.search(attr+r'\s*=\s*\"?(\d+(\.\d+)?)\"?', imgattr)
     if m:
         try:
             val = float(m.groups()[0])
