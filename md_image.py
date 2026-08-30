@@ -65,13 +65,9 @@ class MarkdownImagesPlugin(sublime_plugin.EventListener):
         _, ext = os.path.splitext(file_name)
         # extensions can be either a list or single string
         extensions = settings.get('extensions')
-        if extensions == '*':
-            return True
         if isinstance(extensions, str):
             return ext == extensions
-        if not extensions:
-            return True
-        return '*' in extensions or ext in extensions
+        return ext in extensions
 
     def _update_images(self, settings, view, **kwargs):
         max_width = settings.get('img_maxwidth', None)
